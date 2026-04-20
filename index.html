@@ -3,204 +3,67 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Deepu, Only for you ❤️</title>
+  <title>For My Deepu ❤️</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;700&display=swap');
+    
     body {
-      background: linear-gradient(135deg, #ff9ed8, #ff69b4);
-      overflow: hidden;
+      font-family: 'Playfair Display', serif;
     }
-    #noBtn {
-      transition: all 0.08s ease-out;   /* Faster movement */
-    }
-    #noBtn.running {
-      position: fixed !important;
-      z-index: 50;
-      box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
+    .title-font {
+      font-family: 'Great Vibes', cursive;
     }
   </style>
 </head>
-<body class="min-h-screen flex items-center justify-center text-white font-sans">
-  <div id="main" class="text-center w-full max-w-[98%] mx-auto px-6 md:px-12 lg:px-20 py-8">
-  
-    <!-- Header - Full width + clean lines -->
-    <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-20 leading-[1.5] text-center">
-      I still choose you every single day.<br>
-      Do you choose me too?<br>
-      Can I keep you as my wife for +1 lifetime? ❤️
-    </h1>
-  
-    <div id="character" class="text-[170px] md:text-[220px] mb-12 transition-all">🥰</div>
-  
-    <div class="flex justify-center gap-8 relative flex-wrap">
-      <button onclick="sayYes()" 
-              class="bg-green-500 hover:bg-green-600 px-14 py-7 rounded-3xl text-4xl font-bold shadow-xl transition transform hover:scale-110">
-        YES 💖
-      </button>
-  
-      <button onclick="sayNo()" id="noBtn"
-              class="bg-red-500 hover:bg-red-600 px-12 py-7 rounded-3xl text-3xl font-bold shadow-xl">
-        No
-      </button>
+<body class="bg-gradient-to-br from-pink-50 to-rose-100 min-h-screen flex items-center justify-center p-6">
+
+  <div class="max-w-4xl w-full">
+    <!-- Header -->
+    <div class="text-center mb-16">
+      <h1 class="title-font text-7xl text-pink-600 mb-3">Deepu ❤️</h1>
+      <p class="text-2xl text-pink-700 font-light">Gunjan's Love for You</p>
     </div>
-  
-    <p id="status" class="mt-12 text-xl font-medium text-pink-100 min-h-[3rem]"></p>
+
+    <div class="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
+      
+      <!-- Card 1: Be My Valentine -->
+      <a href="be_my_valentine.html" 
+         class="group bg-white rounded-3xl shadow-xl overflow-hidden hover:shadow-2xl transition-all hover:-translate-y-2">
+        <div class="h-64 bg-gradient-to-br from-pink-400 to-rose-500 flex items-center justify-center text-8xl">
+          💖
+        </div>
+        <div class="p-8 text-center">
+          <h2 class="text-3xl font-medium text-pink-700 mb-3">Be My Valentine</h2>
+          <p class="text-pink-600">Will you be my Valentine again?</p>
+          <div class="mt-6 inline-block px-8 py-3 bg-pink-600 text-white rounded-full text-lg font-medium group-hover:bg-pink-700 transition-colors">
+            Open ❤️
+          </div>
+        </div>
+      </a>
+
+      <!-- Card 2: Why I Choose You -->
+      <a href="why_i_choose.html" 
+         class="group bg-white rounded-3xl shadow-xl overflow-hidden hover:shadow-2xl transition-all hover:-translate-y-2">
+        <div class="h-64 bg-gradient-to-br from-purple-400 to-pink-500 flex items-center justify-center text-8xl">
+          🌹
+        </div>
+        <div class="p-8 text-center">
+          <h2 class="text-3xl font-medium text-pink-700 mb-3">Why I Choose You</h2>
+          <p class="text-pink-600">Every single day...</p>
+          <div class="mt-6 inline-block px-8 py-3 bg-pink-600 text-white rounded-full text-lg font-medium group-hover:bg-pink-700 transition-colors">
+            Open 💕
+          </div>
+        </div>
+      </a>
+
+    </div>
+
+    <p class="text-center text-pink-500 mt-12 text-sm">
+      Made with love by Gunjan for Deepu ❤️
+    </p>
   </div>
 
-  <!-- Success Screen -->
-  <div id="success" class="hidden text-center max-w-md mx-auto p-8">
-    <h2 class="text-5xl font-bold mb-6">Knew you would say yes! 🎉</h2>
-    <div class="text-8xl mb-8">🥰💕🐶</div>
-    <p class="text-3xl font-medium mb-10">You just made me the happiest person! ❤️</p>
-    <button onclick="restart()" class="bg-white text-pink-500 px-10 py-4 rounded-3xl text-2xl font-bold shadow-xl">
-      Play again ❤️
-    </button>
-  </div>
-
-  <canvas id="confetti" class="fixed inset-0 pointer-events-none hidden"></canvas>
-
-  <script>
-    let noCount = 0;
-    let isRunning = false;
-
-    const noMessages = [
-      "No", 
-      "Are you positive? 😭", 
-      "Pookie please... ❤️", 
-      "I will be very sad... 🥺",
-      "Really? Not even a little? 🥹",
-      "Even the WiFi is sad now... 📶💔", 
-      "My heart is breaking... 😢",
-      "You're killing me here... 🥀",
-      "Last chance!! 😭"
-    ];
-
-    const characters = ["🥰", "🥺", "😭", "🥹", "😢", "🐹🐶", "💔", "🥀", "😭"];
-
-    const noBtn = document.getElementById("noBtn");
-
-    function getRandomPosition() {
-      const padding = 100;
-      const btnWidth = noBtn.offsetWidth || 120;
-      const btnHeight = noBtn.offsetHeight || 60;
-      
-      const maxX = window.innerWidth - btnWidth - padding;
-      const maxY = window.innerHeight - btnHeight - padding;
-      
-      const x = padding + Math.random() * maxX;
-      const y = padding + Math.random() * maxY;
-      
-      return { x: Math.max(padding, x), y: Math.max(padding, y) };
-    }
-
-    function moveButtonRandomly() {
-      const pos = getRandomPosition();
-      noBtn.style.left = `${pos.x}px`;
-      noBtn.style.top = `${pos.y}px`;
-    }
-
-    function activateRunningMode() {
-      if (isRunning) return;
-      isRunning = true;
-
-      noBtn.classList.add("running");
-      noBtn.textContent = "Last chance!! 😭";
-
-      // Move on hover
-      noBtn.addEventListener("mouseenter", moveButtonRandomly);
-      
-      // Move on click attempt (and prevent any "No" action)
-      noBtn.addEventListener("click", (e) => {
-        e.preventDefault();
-        e.stopImmediatePropagation();
-        moveButtonRandomly();
-      });
-    }
-
-    function sayNo() {
-      noCount++;
-      const char = document.getElementById("character");
-      const status = document.getElementById("status");
-
-      const index = Math.min(noCount - 1, noMessages.length - 1);
-
-      noBtn.textContent = noMessages[index];
-      char.textContent = characters[index];
-      
-      status.textContent = "Come on... you know you want to say yes 💕";
-
-      if (noCount < 9) {
-        // Normal stages
-        noBtn.classList.add("animate-bounce");
-        setTimeout(() => noBtn.classList.remove("animate-bounce"), 500);
-      } else {
-        // LAST CHANCE - Running mode
-        activateRunningMode();
-        moveButtonRandomly();           // First immediate jump
-      }
-    }
-
-    function sayYes() {
-      document.getElementById("main").classList.add("hidden");
-      document.getElementById("success").classList.remove("hidden");
-      
-      const canvas = document.getElementById("confetti");
-      canvas.classList.remove("hidden");
-      launchConfetti(canvas);
-    }
-
-    function launchConfetti(canvas) {
-      const ctx = canvas.getContext("2d");
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-
-      let particles = [];
-      const colors = ["#ff69b4", "#ff1493", "#ffd700", "#00ff7f", "#ffffff"];
-
-      class Particle {
-        constructor() {
-          this.x = Math.random() * canvas.width;
-          this.y = Math.random() * canvas.height - canvas.height;
-          this.size = Math.random() * 14 + 8;
-          this.speed = Math.random() * 7 + 4;
-          this.color = colors[Math.floor(Math.random() * colors.length)];
-          this.angle = Math.random() * 360;
-          this.spin = Math.random() * 0.3 - 0.15;
-        }
-        update() { this.y += this.speed; this.angle += this.spin; }
-        draw() {
-          ctx.save();
-          ctx.translate(this.x, this.y);
-          ctx.rotate(this.angle * Math.PI / 180);
-          ctx.fillStyle = this.color;
-          ctx.font = `${this.size}px sans-serif`;
-          ctx.fillText("❤️", 0, 0);
-          ctx.restore();
-        }
-      }
-
-      for (let i = 0; i < 180; i++) particles.push(new Particle());
-
-      function animate() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        for (let i = particles.length - 1; i >= 0; i--) {
-          particles[i].update();
-          particles[i].draw();
-          if (particles[i].y > canvas.height + 50) particles.splice(i, 1);
-        }
-        if (particles.length > 0) requestAnimationFrame(animate);
-      }
-      animate();
-    }
-
-    function restart() {
-      location.reload();
-    }
-
-    // Resize support
-    window.addEventListener("resize", () => {
-      if (isRunning) moveButtonRandomly();
-    });
-  </script>
 </body>
 </html>
