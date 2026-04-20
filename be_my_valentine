@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deepu, Only for you ❤️</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background: linear-gradient(135deg, #ff9ed8, #ff69b4);
+      overflow: hidden;
+    }
+    #noBtn {
+      transition: all 0.08s ease-out;   /* Faster movement */
+    }
+    #noBtn.running {
+      position: fixed !important;
+      z-index: 50;
+      box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center text-white font-sans">
+  <div id="main" class="text-center w-full max-w-[98%] mx-auto px-6 md:px-12 lg:px-20 py-8">
+  
+    <!-- Header - Full width + clean lines -->
+    <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-20 leading-[1.5] text-center">
+      I still choose you every single day.<br>
+      Do you choose me too?<br>
+      Can I keep you as my wife for +1 lifetime? ❤️
+    </h1>
+  
+    <div id="character" class="text-[170px] md:text-[220px] mb-12 transition-all">🥰</div>
+  
+    <div class="flex justify-center gap-8 relative flex-wrap">
+      <button onclick="sayYes()" 
+              class="bg-green-500 hover:bg-green-600 px-14 py-7 rounded-3xl text-4xl font-bold shadow-xl transition transform hover:scale-110">
+        YES 💖
+      </button>
+  
+      <button onclick="sayNo()" id="noBtn"
+              class="bg-red-500 hover:bg-red-600 px-12 py-7 rounded-3xl text-3xl font-bold shadow-xl">
+        No
+      </button>
+    </div>
+  
+    <p id="status" class="mt-12 text-xl font-medium text-pink-100 min-h-[3rem]"></p>
+  </div>
+
+  <!-- Success Screen -->
+  <div id="success" class="hidden text-center max-w-md mx-auto p-8">
+    <h2 class="text-5xl font-bold mb-6">Knew you would say yes! 🎉</h2>
+    <div class="text-8xl mb-8">🥰💕🐶</div>
+    <p class="text-3xl font-medium mb-10">You just made me the happiest person! ❤️</p>
+    <button onclick="restart()" class="bg-white text-pink-500 px-10 py-4 rounded-3xl text-2xl font-bold shadow-xl">
+      Play again ❤️
+    </button>
+  </div>
+
+  <canvas id="confetti" class="fixed inset-0 pointer-events-none hidden"></canvas>
+
+  <script>
+    let noCount = 0;
+    let isRunning = false;
+
+    const noMessages = [
+      "No", 
+      "Are you positive? 😭", 
+      "Pookie please... ❤️", 
+      "I will be very sad... 🥺",
+      "Really? Not even a little? 🥹",
+      "Even the WiFi is sad now... 📶💔", 
+      "My heart is breaking... 😢",
+      "You're killing me here... 🥀",
+      "Last chance!! 😭"
+    ];
+
+    const characters = ["🥰", "🥺", "😭", "🥹", "😢", "🐹🐶", "💔", "🥀", "😭"];
+
+    const noBtn = document.getElementById("noBtn");
+
+    function getRandomPosition() {
+      const padding = 100;
+      const btnWidth = noBtn.offsetWidth || 120;
+      const btnHeight = noBtn.offsetHeight || 60;
+      
+      const maxX = window.innerWidth - btnWidth - padding;
+      const maxY = window.innerHeight - btnHeight - padding;
+      
+      const x = padding + Math.random() * maxX;
+      const y = padding + Math.random() * maxY;
+      
+      return { x: Math.max(padding, x), y: Math.max(padding, y) };
+    }
+
+    function moveButtonRandomly() {
+      const pos = getRandomPosition();
+      noBtn.style.left = `${pos.x}px`;
+      noBtn.style.top = `${pos.y}px`;
+    }
+
+    function activateRunningMode() {
+      if (isRunning) return;
+      isRunning = true;
+
+      noBtn.classList.add("running");
+      noBtn.textContent = "Last chance!! 😭";
+
+      // Move on hover
+      noBtn.addEventListener("mouseenter", moveButtonRandomly);
+      
+      // Move on click attempt (and prevent any "No" action)
+      noBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        moveButtonRandomly();
+      });
+    }
+
+    function sayNo() {
+      noCount++;
+      const char = document.getElementById("character");
+      const status = document.getElementById("status");
+
+      const index = Math.min(noCount - 1, noMessages.length - 1);
+
+      noBtn.textContent = noMessages[index];
+      char.textContent = characters[index];
+      
+      status.textContent = "Come on... you know you want to say yes 💕";
+
+      if (noCount < 9) {
+        // Normal stages
+        noBtn.classList.add("animate-bounce");
+        setTimeout(() => noBtn.classList.remove("animate-bounce"), 500);
+      } else {
+        // LAST CHANCE - Running mode
+        activateRunningMode();
+        moveButtonRandomly();           // First immediate jump
+      }
+    }
+
+    function sayYes() {
+      document.getElementById("main").classList.add("hidden");
+      document.getElementById("success").classList.remove("hidden");
+      
+      const canvas = document.getElementById("confetti");
+      canvas.classList.remove("hidden");
+      launchConfetti(canvas);
+    }
+
+    function launchConfetti(canvas) {
+      const ctx = canvas.getContext("2d");
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      let particles = [];
+      const colors = ["#ff69b4", "#ff1493", "#ffd700", "#00ff7f", "#ffffff"];
+
+      class Particle {
+        constructor() {
+          this.x = Math.random() * canvas.width;
+          this.y = Math.random() * canvas.height - canvas.height;
+          this.size = Math.random() * 14 + 8;
+          this.speed = Math.random() * 7 + 4;
+          this.color = colors[Math.floor(Math.random() * colors.length)];
+          this.angle = Math.random() * 360;
+          this.spin = Math.random() * 0.3 - 0.15;
+        }
+        update() { this.y += this.speed; this.angle += this.spin; }
+        draw() {
+          ctx.save();
+          ctx.translate(this.x, this.y);
+          ctx.rotate(this.angle * Math.PI / 180);
+          ctx.fillStyle = this.color;
+          ctx.font = `${this.size}px sans-serif`;
+          ctx.fillText("❤️", 0, 0);
+          ctx.restore();
+        }
+      }
+
+      for (let i = 0; i < 180; i++) particles.push(new Particle());
+
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (let i = particles.length - 1; i >= 0; i--) {
+          particles[i].update();
+          particles[i].draw();
+          if (particles[i].y > canvas.height + 50) particles.splice(i, 1);
+        }
+        if (particles.length > 0) requestAnimationFrame(animate);
+      }
+      animate();
+    }
+
+    function restart() {
+      location.reload();
+    }
+
+    // Resize support
+    window.addEventListener("resize", () => {
+      if (isRunning) moveButtonRandomly();
+    });
+  </script>
+</body>
+</html>
