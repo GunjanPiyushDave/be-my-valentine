@@ -10,12 +10,11 @@
       background: linear-gradient(135deg, #ff9ed8, #ff69b4);
       overflow: hidden;
     }
-    .heart { animation: float 3s infinite ease-in-out; }
-    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
-
+    #noBtn {
+      transition: all 0.15s ease-out;
+    }
     #noBtn.running {
       position: fixed !important;
-      transition: all 0.12s ease-out;
       z-index: 50;
     }
   </style>
@@ -31,12 +30,12 @@
     <div class="flex justify-center gap-6 relative">
       <!-- Yes Button -->
       <button onclick="sayYes()" 
-              class="bg-green-500 hover:bg-green-600 px-12 py-6 rounded-3xl text-4xl font-bold shadow-xl transition transform hover:scale-110 active:scale-95">
+              class="bg-green-500 hover:bg-green-600 px-12 py-6 rounded-3xl text-4xl font-bold shadow-xl transition transform hover:scale-110">
         YES 💖
       </button>
 
       <!-- No Button -->
-      <button id="noBtn"
+      <button onclick="sayNo()" id="noBtn"
               class="bg-red-500 hover:bg-red-600 px-10 py-6 rounded-3xl text-3xl font-bold shadow-xl">
         No
       </button>
@@ -59,39 +58,42 @@
 
   <script>
     let noCount = 0;
-    const noMessages = [
-      "No",
-      "Are you positive? 😭",
-      "Pookie please... ❤️",
-      "I will be very sad... 🥺",
-      "Last chance!! 😢"
-    ];
+    let isRunning = false;
+
+    const noMessages = ["No", "Are you positive? 😭", "Pookie please... ❤️", "I will be very sad... 🥺", "Last chance!! 😢"];
     const characters = ["🥰", "🥺", "😭", "🥹", "😢"];
 
     const noBtn = document.getElementById("noBtn");
-    let isRunning = false;
 
     function getRandomPosition() {
-      const padding = 100;
+      const padding = 80;
       const maxX = window.innerWidth - noBtn.offsetWidth - padding;
       const maxY = window.innerHeight - noBtn.offsetHeight - padding;
-      
-      const x = Math.random() * maxX + padding/2;
-      const y = Math.random() * maxY + padding/2;
-      
+      const x = Math.max(padding, Math.random() * maxX);
+      const y = Math.max(padding, Math.random() * maxY);
       return { x, y };
     }
 
-    function moveButton() {
-      if (!isRunning) {
-        isRunning = true;
-        noBtn.classList.add("running");
-        noBtn.style.pointerEvents = "none";   // Disable clicks permanently
-      }
-
+    function moveButtonRandomly() {
       const pos = getRandomPosition();
       noBtn.style.left = `${pos.x}px`;
       noBtn.style.top = `${pos.y}px`;
+    }
+
+    function activateRunningMode() {
+      if (isRunning) return;
+      isRunning = true;
+
+      noBtn.classList.add("running");
+      noBtn.style.pointerEvents = "none";        // Make it impossible to click
+      noBtn.textContent = "Last chance!! 😢";
+
+      // Move when user hovers or tries to click
+      noBtn.addEventListener("mouseenter", moveButtonRandomly);
+      noBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        moveButtonRandomly();
+      });
     }
 
     function sayNo() {
@@ -99,28 +101,20 @@
       const char = document.getElementById("character");
       const status = document.getElementById("status");
 
-      const messageIndex = Math.min(noCount - 1, noMessages.length - 1);
-      noBtn.textContent = noMessages[messageIndex];
-      char.textContent = characters[messageIndex];
+      const index = Math.min(noCount - 1, noMessages.length - 1);
 
+      noBtn.textContent = noMessages[index];
+      char.textContent = characters[index];
       status.textContent = "Come on... you know you want to say yes 💕";
 
-      // Normal behavior for first 4 clicks
       if (noCount < 5) {
+        // Normal clicks - just bounce
         noBtn.classList.add("animate-bounce");
-        setTimeout(() => noBtn.classList.remove("animate-bounce"), 500);
-      } 
-      // LAST CHANCE - Button starts running forever
-      else {
-        moveButton();
-
-        // Move every time user tries to click or hovers
-        noBtn.addEventListener("click", (e) => {
-          e.preventDefault();
-          moveButton();
-        }, { once: false });
-
-        noBtn.addEventListener("mouseenter", moveButton, { once: false });
+        setTimeout(() => noBtn.classList.remove("animate-bounce"), 600);
+      } else {
+        // 5th click onwards → running mode
+        activateRunningMode();
+        moveButtonRandomly();   // Immediate first jump
       }
     }
 
@@ -138,8 +132,8 @@
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
 
-      const colors = ["#ff69b4", "#ff1493", "#ffd700", "#00ff7f", "#ffffff"];
       let particles = [];
+      const colors = ["#ff69b4", "#ff1493", "#ffd700", "#00ff7f", "#ffffff"];
 
       class Particle {
         constructor() {
@@ -149,12 +143,9 @@
           this.speed = Math.random() * 7 + 4;
           this.color = colors[Math.floor(Math.random() * colors.length)];
           this.angle = Math.random() * 360;
-          this.spin = Math.random() * 0.2 - 0.1;
+          this.spin = Math.random() * 0.3 - 0.15;
         }
-        update() {
-          this.y += this.speed;
-          this.angle += this.spin;
-        }
+        update() { this.y += this.speed; this.angle += this.spin; }
         draw() {
           ctx.save();
           ctx.translate(this.x, this.y);
@@ -170,11 +161,11 @@
 
       function animate() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        particles.forEach((p, i) => {
-          p.update();
-          p.draw();
-          if (p.y > canvas.height + 50) particles.splice(i, 1);
-        });
+        for (let i = particles.length - 1; i >= 0; i--) {
+          particles[i].update();
+          particles[i].draw();
+          if (particles[i].y > canvas.height + 50) particles.splice(i, 1);
+        }
         if (particles.length > 0) requestAnimationFrame(animate);
       }
       animate();
@@ -184,9 +175,8 @@
       location.reload();
     }
 
-    // Handle window resize
     window.addEventListener("resize", () => {
-      if (isRunning) moveButton();
+      if (isRunning) moveButtonRandomly();
     });
   </script>
 </body>
