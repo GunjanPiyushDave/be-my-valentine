@@ -72,7 +72,6 @@
       "How you make every ordinary day feel magical",
       "Your incredible strength and kindness at the same time",
       "The way you look at me like I'm your favorite person",
-      "Your cute morning voice and sleepy hugs",
       "How you always know exactly what I need without me saying it",
       "The way you dance when you think no one is watching",
       "Your beautiful heart that cares so deeply for others",
@@ -83,26 +82,21 @@
       "Your amazing cooking and the love you put in every meal",
       "Because you are my home, my peace, and my greatest adventure",
       "Your sparkling eyes when you talk about something you love",
-      "How you hold my hand even in a crowded place",
       "The way you make me want to be a better person every day",
       "Your warm hugs that melt all my stress away",
       "How beautifully you understand my silence",
       "Your patience with me when I'm difficult",
       "The way you say my name — it still gives me butterflies",
-      "Your cute little pout when you're pretending to be angry",
-      "How you support my dreams like they're your own",
       "Your intelligence and the way you see the world",
       "The way you light up the room just by walking in",
       "Your unconditional love on my worst days",
       "How you remember every small thing I tell you",
       "Your adorable morning hair and sleepy smile",
       "Because loving you feels like the easiest thing I've ever done",
-      "The way you kiss my forehead",
       "Your strength during tough times inspires me",
       "How you make me laugh like no one else can",
       "Your beautiful soul that shines brighter than anything",
       "The comfort of falling asleep next to you",
-      "Your endless positivity even on bad days",
       "How you make simple moments feel special",
       "Your soft voice that calms my anxiety",
       "Because you are my best friend and my greatest love",
@@ -122,16 +116,10 @@
       "Your ability to find joy in little things",
       "How you always make time for us",
       "Your warm and loving nature",
-      "The way you make me feel like a king",
-      "Your sweet good morning and good night messages",
       "Because you accept me exactly as I am",
-      "Your caring heart for animals and people",
-      "The way you snuggle closer when it's cold",
       "Your amazing ability to make me feel calm",
-      "How you celebrate even my smallest wins",
       "Your beautiful mind and thoughts",
       "The way you make house feel like home",
-      "Your loving morning kisses",
       "Because you make every day worth waking up for",
       "Your incredible patience with me",
       "The way you look at me when you think I'm not watching",
@@ -148,12 +136,124 @@
       "The way you make me proud every day",
       "Your beautiful soul that I cherish",
       "How you make me feel young and alive",
-      "Your caring nature towards my family",
       "The way you trust me completely",
-      "Your adorable sleepy talks",
       "Because loving you is my favorite habit",
       "Your strength and grace combined",
       "How you make me a better version of myself",
       "Your warm heart that heals me",
-      "The way you say 'I love you'",
-      "Your beautiful smile that I fall
+      "Your beautiful smile that I fall for every time",
+      "Because you are my forever and always",
+      "Your love that feels like magic",
+      "How you make rainy days cozy",
+      "Your genuine care for my happiness",
+      "The way you complete me perfectly",
+      "Your beautiful journey with me",
+      "Because every day with you is a blessing",
+      "Your love that grows stronger every day",
+      "How you make life so much more beautiful",
+      "Because you are my greatest blessing and my deepest love",
+      
+      "The way you gently play with your hair",
+      "Because you turn my bad mood into laughter instantly",
+      "How you always smell like home to me",
+      "Your unstoppable determination when you set your mind to something",
+      "Your cute reactions when watching romantic scenes",
+      "How perfectly you never understand my weird sense of humor",
+      "Your love for taking random selfies with me",
+      "Your soft breathing when you fall asleep in my arms",
+      "How you always find the good in every situation",
+      "Your beautiful skin that glows when you're happy",
+      "Because you love me even when I don't deserve it",
+      "Your passion when you talk about things you care about",
+      "The way you make me want to protect you forever",
+      "How you remember our special dates without reminders",
+      "Because every love song now reminds me of you",
+      "The way you fit perfectly when we cuddle",
+      "Your kind heart that helps strangers too",
+      "Because you make growing old together sound amazing",
+      "The way you tease me lovingly",
+      "Your amazing ability to make any place feel like home",
+      "How your touch still gives me goosebumps",
+      "Because you are my safe place and my wildest dream",
+      "Because I fall in love with you all over again every morning",
+      "Your beautiful messy hair in the morning",
+      "How you make me a more patient and loving person",
+      "The way you light up when you see your favorite food",
+      "Because you chose to build a life with me",
+      "Your adorable jealous face (I secretly love it)",
+      "How you make winter nights warm and cozy",
+      "Your beautiful soul that loves deeply",
+      "Because with you, life feels complete",
+      "Your cute way of organizing everything",
+      "How you make long conversations feel short",
+      "The way you hold me tight when I feel low",
+      "Your infectious energy and positivity",
+      "Because you are my favorite notification",
+      "Your gentle way of correcting me",
+      "How you make me dream bigger",
+      "The way your laughter fills the whole room",
+      "Your beautiful mind that thinks so deeply",
+      "Because loving you is the best decision I ever made",
+      "Your sweet habit of saving the last bite for me",
+      "The comfort I feel just by hearing your voice",
+      "Your adorable excitement for festivals and celebrations",
+      "Because you make every moment memorable",
+      "The way you blush when I compliment you",
+      "Your strong yet soft personality",
+      "How you always make me feel wanted",
+      "Your beautiful prayers for us",
+      "Because you are my greatest gift from God",
+      "The way you motivate me without pushing",
+      "Your cute habit of making playlists for us",
+      "Because I still get nervous when you look at me",
+      "Your loving heart that forgives quickly",
+      "Your beautiful dreams that I want to fulfill",
+      "Because you make love feel so easy and real",
+      "The way you make me believe in soulmates",
+      "Because every day with you is better than the last",
+      "Your beautiful imperfections that I adore",
+      "The peace I feel when I see you sleeping",
+      "Your cute competitive side in games",
+      "Because you are my reason to smile every day",
+      "The way you make future plans so exciting",
+      "Your warm hands that always calm me",
+      "How you love me loudly and proudly",
+      "Because you are my forever Valentine",
+      "Your beautiful journey of becoming my everything",
+      "The way you make ordinary life feel like a fairy tale",
+      "Because I choose you today, tomorrow, and every day after"
+    ];
+
+    function createFloatingHeart() {
+      const container = document.getElementById('heartsContainer');
+      const heart = document.createElement('div');
+      heart.className = 'floating-heart';
+      heart.textContent = ['❤️','💖','💕','💗'][Math.floor(Math.random()*4)];
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.bottom = '-50px';
+      heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
+      container.appendChild(heart);
+      setTimeout(() => heart.remove(), 6000);
+    }
+
+    function getNewReason() {
+      const randomIndex = Math.floor(Math.random() * reasons.length);
+      const reason = reasons[randomIndex];
+
+      // Show reason
+      document.getElementById('reasonBox').innerHTML = `
+        <span class="block text-5xl mb-6">❤️</span>
+        ${reason}
+      `;
+
+      // Floating hearts animation
+      for (let i = 0; i < 15; i++) {
+        setTimeout(createFloatingHeart, i * 60);
+      }
+    }
+
+    // Load first reason automatically
+    window.onload = getNewReason;
+  </script>
+</body>
+</html>
