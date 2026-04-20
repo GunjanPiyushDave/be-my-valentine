@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Why I Choose You Every Day ❤️</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;700&display=swap');
+    
+    body {
+      font-family: 'Playfair Display', serif;
+    }
+    .title-font {
+      font-family: 'Great Vibes', cursive;
+    }
+    .heart {
+      transition: transform 0.3s ease;
+    }
+    .heart:hover {
+      transform: scale(1.15);
+    }
+    .floating-heart {
+      position: absolute;
+      font-size: 2rem;
+      color: #ff4d94;
+      animation: floatUp 3s ease forwards;
+      pointer-events: none;
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-300px) scale(0.5); opacity: 0; }
+    }
+  </style>
+</head>
+<body class="bg-pink-50 min-h-screen flex flex-col items-center justify-center p-6 overflow-hidden">
+  <div class="max-w-2xl w-full text-center">
+    <!-- Header -->
+    <h1 class="title-font text-6xl text-pink-600 mb-2">Deepu ❤️</h1>
+    <h2 class="text-3xl font-light text-pink-700 mb-10">Why I Choose You Every Day</h2>
+
+    <!-- Big Heart -->
+    <div onclick="getNewReason()" 
+         class="heart mx-auto w-52 h-52 bg-white rounded-full shadow-2xl flex items-center justify-center cursor-pointer border-8 border-pink-300 hover:border-pink-400">
+      <i class="fa-solid fa-heart text-9xl text-pink-500"></i>
+    </div>
+
+    <p class="mt-6 text-pink-600 font-medium text-lg">Click the heart to discover a new reason</p>
+
+    <!-- Reason Display -->
+    <div id="reasonBox" 
+         class="mt-10 min-h-[180px] bg-white rounded-3xl shadow-xl p-10 text-xl leading-relaxed text-pink-800">
+      Click the heart to start ❤️
+    </div>
+
+    <!-- Next Button -->
+    <button onclick="getNewReason()" 
+            class="mt-8 px-10 py-4 bg-pink-600 hover:bg-pink-700 text-white text-xl font-medium rounded-full shadow-lg transition-all active:scale-95">
+      Next Reason 💕
+    </button>
+
+    <!-- History -->
+    <div class="mt-16 text-left">
+      <h3 class="text-pink-600 text-lg mb-4 flex items-center gap-2">
+        <i class="fa-solid fa-list"></i> All Reasons
+      </h3>
+      <ul id="historyList" class="space-y-3 text-left"></ul>
+    </div>
+  </div>
+
+  <!-- Floating hearts container -->
+  <div id="heartsContainer" class="fixed inset-0 pointer-events-none"></div>
+
+  <script>
+    const reasons = [
+    const reasons = [
+        "Your smile lights up my entire world every single morning",
+        "The way you laugh at my silly jokes, even when they're not funny",
+        "How you make every ordinary day feel magical",
+        "Your incredible strength and kindness at the same time",
+        "The way you look at me like I'm your favorite person",
+        "Your cute morning voice and sleepy hugs",
+        "How you always know exactly what I need without me saying it",
+        "The way you dance when you think no one is watching",
+        "Your beautiful heart that cares so deeply for others",
+        "Because you chose me too, and that makes me the luckiest man alive",
+        "Your little habits that I've fallen in love with",
+        "How safe and loved I feel when I'm with you",
+        "The way you believe in me even when I doubt myself",
+        "Your amazing cooking and the love you put in every meal",
+        "Because you are my home, my peace, and my greatest adventure",
+        "Your sparkling eyes when you talk about something you love",
+        "How you hold my hand even in a crowded place",
+        "The way you make me want to be a better person every day",
+        "Your warm hugs that melt all my stress away",
+        "How beautifully you understand my silence",
+        "Your patience with me when I'm difficult",
+        "The way you say my name — it still gives me butterflies",
+        "Your cute little pout when you're pretending to be angry",
+        "How you support my dreams like they're your own",
+        "Your intelligence and the way you see the world",
+        "The way you light up the room just by walking in",
+        "Your unconditional love on my worst days",
+        "How you remember every small thing I tell you",
+        "Your adorable morning hair and sleepy smile",
+        "Because loving you feels like the easiest thing I've ever done",
+        "The way you kiss my forehead",
+        "Your strength during tough times inspires me",
+        "How you make me laugh like no one else can",
+        "Your beautiful soul that shines brighter than anything",
+        "The comfort of falling asleep next to you",
+        "Your endless positivity even on bad days",
+        "How you make simple moments feel special",
+        "Your soft voice that calms my anxiety",
+        "Because you are my best friend and my greatest love",
+        "The way you take care of me when I'm sick",
+        "Your cute excitement over small things",
+        "How perfectly your hand fits in mine",
+        "Your honesty and pure heart",
+        "The way you motivate me to chase my goals",
+        "Your beautiful laugh that I can never get enough of",
+        "Because with you, I never feel alone",
+        "Your gentle touch that makes me feel loved",
+        "How you forgive me so easily",
+        "Your dedication and hard work",
+        "The way you look beautiful in anything you wear",
+        "Your silly random dances that brighten my mood",
+        "Because you make the future feel exciting",
+        "Your ability to find joy in little things",
+        "How you always make time for us",
+        "Your warm and loving nature",
+        "The way you make me feel like a king",
+        "Your sweet good morning and good night messages",
+        "Because you accept me exactly as I am",
+        "Your caring heart for animals and people",
+        "The way you snuggle closer when it's cold",
+        "Your amazing ability to make me feel calm",
+        "How you celebrate even my smallest wins",
+        "Your beautiful mind and thoughts",
+        "The way you make house feel like home",
+        "Your loving morning kisses",
+        "Because you make every day worth waking up for",
+        "Your incredible patience with me",
+        "The way you look at me when you think I'm not watching",
+        "Your sweet surprises and gestures",
+        "How you make long drives feel short",
+        "Your pure and genuine love",
+        "Because I can't imagine my life without you",
+        "Your beautiful voice when you sing",
+        "The comfort of your presence",
+        "How you always encourage me",
+        "Your cute expressions when you're focused",
+        "Because you are my peace in this chaotic world",
+        "Your endless love and affection",
+        "The way you make me proud every day",
+        "Your beautiful soul that I cherish",
+        "How you make me feel young and alive",
+        "Your caring nature towards my family",
+        "The way you trust me completely",
+        "Your adorable sleepy talks",
+        "Because loving you is my favorite habit",
+        "Your strength and grace combined",
+        "How you make me a better version of myself",
+        "Your warm heart that heals me",
+        "The way you say 'I love you'",
+        "Your beautiful smile that I fall for every time",
+        "Because you are my forever and always",
+        "Your love that feels like magic",
+        "How you make rainy days cozy",
+        "Your genuine care for my happiness",
+        "The way you complete me perfectly",
+        "Your beautiful journey with me",
+        "Because every day with you is a blessing",
+        "Your love that grows stronger every day",
+        "How you make life so much more beautiful",
+        "Because you are my greatest blessing and my deepest love"
+    ];
+    ];
+
+    let history = [];
+
+    function createFloatingHeart() {
+      const container = document.getElementById('heartsContainer');
+      const heart = document.createElement('div');
+      heart.className = 'floating-heart';
+      heart.textContent = ['❤️', '💖', '💕', '💗'][Math.floor(Math.random() * 4)];
+      
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.bottom = '-50px';
+      heart.style.animationDuration = (Math.random() * 2 + 2.5) + 's';
+      
+      container.appendChild(heart);
+      
+      setTimeout(() => heart.remove(), 5000);
+    }
+
+    function getNewReason() {
+      const randomIndex = Math.floor(Math.random() * reasons.length);
+      const reason = reasons[randomIndex];
+      
+      // Update main box
+      document.getElementById('reasonBox').innerHTML = `
+        <span class="text-4xl block mb-4">❤️</span>
+        ${reason}
+      `;
+
+      // Add to history (avoid duplicates)
+      if (!history.includes(reason)) {
+        history.unshift(reason);
+        if (history.length > 8) history.pop();
+        
+        const list = document.getElementById('historyList');
+        list.innerHTML = history.map(r => `
+          <li class="bg-white p-4 rounded-2xl shadow text-pink-700">${r}</li>
+        `).join('');
+      }
+
+      // Create floating hearts
+      for (let i = 0; i < 8; i++) {
+        setTimeout(createFloatingHeart, i * 80);
+      }
+    }
+
+    // Auto first reason
+    window.onload = () => {
+      getNewReason();
+    };
+  </script>
+</body>
+</html>
