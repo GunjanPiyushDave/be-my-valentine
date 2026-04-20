@@ -21,18 +21,18 @@
   </style>
 </head>
 <body class="min-h-screen flex items-center justify-center text-white font-sans">
-  <div id="main" class="text-center max-w-3xl mx-auto p-8 md:p-12">   <!-- Much wider container -->
-
-    <!-- Updated Header with extra spacing -->
-    <h1 class="text-4xl md:text-5xl font-bold mb-16 leading-[1.35] text-center px-4">
+  <div id="main" class="text-center max-w-[95%] md:max-w-4xl mx-auto p-6 md:p-12 lg:p-16">
+  
+    <!-- Maximum spacing header -->
+    <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-20 leading-[1.45] text-center px-4">
       I still choose you every single day.<br>
       Do you choose me too?<br>
       Can I keep you as my wife for another lifetime? ❤️
     </h1>
 
-    <div id="character" class="text-[180px] mb-8 transition-all">🥰</div>
+    <div id="character" class="text-[160px] md:text-[180px] mb-10 transition-all">🥰</div>
 
-    <div class="flex justify-center gap-6 relative">
+    <div class="flex justify-center gap-6 relative  flex-wrap">
       <!-- Yes Button -->
       <button onclick="sayYes()" 
               class="bg-green-500 hover:bg-green-600 px-12 py-6 rounded-3xl text-4xl font-bold shadow-xl transition transform hover:scale-110">
@@ -46,7 +46,8 @@
       </button>
     </div>
 
-    <p id="status" class="mt-8 text-xl font-medium text-pink-100 min-h-[3rem]"></p>
+    
+    <p id="status" class="mt-10 text-xl font-medium text-pink-100 min-h-[3rem]"></p>
   </div>
 
   <!-- Success Screen -->
