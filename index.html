@@ -60,8 +60,22 @@
     let noCount = 0;
     let isRunning = false;
 
-    const noMessages = ["No", "Are you positive? 😭", "Pookie please... ❤️", "I will be very sad... 🥺", "Last chance!! 😢"];
-    const characters = ["🥰", "🥺", "😭", "🥹", "😢"];
+    const noMessages = [
+      "No",
+      "Are you positive? 😭",
+      "Pookie please... ❤️",
+      "I will be very sad... 🥺",
+      "Really? Not even a little? 🥹",
+      "Think of the hamsters! 🐹💔",
+      "My heart is breaking... 😢",
+      "You're killing me here... 🥀",
+      "Last chance!! 😭"
+    ];
+
+    const characters = [
+      "🥰", "🥺", "😭", "🥹", 
+      "😢", "🐹", "💔", "🥀", "😭"
+    ];
 
     const noBtn = document.getElementById("noBtn");
 
@@ -85,10 +99,9 @@
       isRunning = true;
 
       noBtn.classList.add("running");
-      noBtn.style.pointerEvents = "none";        // Make it impossible to click
-      noBtn.textContent = "Last chance!! 😢";
+      noBtn.style.pointerEvents = "none";
+      noBtn.textContent = "Last chance!! 😭";
 
-      // Move when user hovers or tries to click
       noBtn.addEventListener("mouseenter", moveButtonRandomly);
       noBtn.addEventListener("click", (e) => {
         e.preventDefault();
@@ -105,16 +118,19 @@
 
       noBtn.textContent = noMessages[index];
       char.textContent = characters[index];
-      status.textContent = "Come on... you know you want to say yes 💕";
+      
+      status.textContent = noCount > 6 
+        ? "This is getting serious... please say yes 💕" 
+        : "Come on... you know you want to say yes 💕";
 
-      if (noCount < 5) {
-        // Normal clicks - just bounce
+      if (noCount < 9) {
+        // Normal funny stages
         noBtn.classList.add("animate-bounce");
         setTimeout(() => noBtn.classList.remove("animate-bounce"), 600);
       } else {
-        // 5th click onwards → running mode
+        // 9th click → running mode
         activateRunningMode();
-        moveButtonRandomly();   // Immediate first jump
+        moveButtonRandomly();
       }
     }
 
