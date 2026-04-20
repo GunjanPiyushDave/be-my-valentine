@@ -19,7 +19,7 @@
       transition: transform 0.4s ease;
     }
     .heart:hover {
-      transform: scale(1.2);
+      transform: scale(1.25);
     }
     .floating-heart {
       position: absolute;
@@ -55,7 +55,12 @@
       Click the big heart ❤️
     </div>
 
-
+    <!-- Next Button -->
+    <button onclick="getNewReason()" 
+            class="mt-8 px-10 py-4 bg-pink-600 hover:bg-pink-700 text-white text-xl font-medium rounded-full shadow-lg transition-all active:scale-95">
+      Next Reason 💕
+    </button>
+  </div>
 
   <!-- Floating hearts container -->
   <div id="heartsContainer" class="fixed inset-0 pointer-events-none"></div>
@@ -151,64 +156,4 @@
       "How you make me a better version of myself",
       "Your warm heart that heals me",
       "The way you say 'I love you'",
-      "Your beautiful smile that I fall for every time",
-      "Because you are my forever and always",
-      "Your love that feels like magic",
-      "How you make rainy days cozy",
-      "Your genuine care for my happiness",
-      "The way you complete me perfectly",
-      "Your beautiful journey with me",
-      "Because every day with you is a blessing",
-      "Your love that grows stronger every day",
-      "How you make life so much more beautiful",
-      "Because you are my greatest blessing and my deepest love"
-    ];
-
-    let history = [];
-
-    function createFloatingHeart() {
-      const container = document.getElementById('heartsContainer');
-      const heart = document.createElement('div');
-      heart.className = 'floating-heart';
-      heart.textContent = '❤️';
-      heart.style.left = Math.random() * 100 + 'vw';
-      heart.style.bottom = '-50px';
-      heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
-      container.appendChild(heart);
-      setTimeout(() => heart.remove(), 6000);
-    }
-
-    function getNewReason() {
-      if (reasons.length === 0) return;
-      
-      const randomIndex = Math.floor(Math.random() * reasons.length);
-      const reason = reasons[randomIndex];
-
-      // Show reason
-      document.getElementById('reasonBox').innerHTML = `
-        <span class="block text-5xl mb-6">❤️</span>
-        ${reason}
-      `;
-
-      // Add to history
-      if (!history.includes(reason)) {
-        history.unshift(reason);
-        if (history.length > 10) history.pop();
-
-        const list = document.getElementById('historyList');
-        list.innerHTML = history.map(r => `
-          <li class="bg-white p-5 rounded-2xl shadow text-pink-700 leading-relaxed">${r}</li>
-        `).join('');
-      }
-
-      // Floating hearts animation
-      for (let i = 0; i < 12; i++) {
-        setTimeout(createFloatingHeart, i * 70);
-      }
-    }
-
-    // Load first reason automatically
-    window.onload = getNewReason;
-  </script>
-</body>
-</html>
+      "Your beautiful smile that I fall
