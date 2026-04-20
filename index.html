@@ -9,50 +9,49 @@
     body {
       background: linear-gradient(135deg, #ff9ed8, #ff69b4);
     }
-    .heart {
-      animation: float 3s infinite ease-in-out;
+    .heart { animation: float 3s infinite ease-in-out; }
+    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+    
+    #noBtn {
+      transition: all 0.2s ease;
     }
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-20px); }
+    #noBtn.running {
+      position: fixed;
+      transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
     }
   </style>
 </head>
-<body class="min-h-screen flex items-center justify-center text-white font-sans">
+<body class="min-h-screen flex items-center justify-center text-white font-sans overflow-hidden">
   <div id="main" class="text-center max-w-md mx-auto p-8">
     <h1 class="text-5xl font-bold mb-8 flex items-center justify-center gap-3">
-      Will you be my Valentine? 
-      <span class="text-4xl">❤️</span>
+      Will you be my Valentine? <span class="text-4xl">❤️</span>
     </h1>
 
-    <!-- Cute character -->
     <div id="character" class="text-[180px] mb-8 transition-all">🥰</div>
 
-    <div class="flex justify-center gap-6">
+    <div class="flex justify-center gap-6 relative">
       <!-- Yes button -->
       <button onclick="sayYes()" 
-              class="yes-btn bg-green-500 hover:bg-green-600 px-12 py-6 rounded-3xl text-4xl font-bold shadow-xl transition transform hover:scale-110">
+              class="bg-green-500 hover:bg-green-600 px-12 py-6 rounded-3xl text-4xl font-bold shadow-xl transition transform hover:scale-110">
         YES 💖
       </button>
 
       <!-- No button -->
       <button onclick="sayNo()" id="noBtn"
-              class="bg-red-500 hover:bg-red-600 px-10 py-6 rounded-3xl text-3xl font-bold shadow-xl transition-all">
+              class="bg-red-500 hover:bg-red-600 px-10 py-6 rounded-3xl text-3xl font-bold shadow-xl">
         No
       </button>
     </div>
 
-    <p id="status" class="mt-8 text-xl font-medium text-pink-100"></p>
+    <p id="status" class="mt-8 text-xl font-medium text-pink-100 min-h-[3rem]"></p>
   </div>
 
-  <!-- Success screen (hidden at first) -->
+  <!-- Success screen -->
   <div id="success" class="hidden text-center max-w-md mx-auto p-8">
     <h2 class="text-5xl font-bold mb-6">Knew you would say yes! 🎉</h2>
     <div class="text-8xl mb-8">🥰💕🐹</div>
     <p class="text-3xl font-medium mb-10">You just made me the happiest person! ❤️</p>
-    
-    <button onclick="restart()" 
-            class="bg-white text-pink-500 px-10 py-4 rounded-3xl text-2xl font-bold shadow-xl">
+    <button onclick="restart()" class="bg-white text-pink-500 px-10 py-4 rounded-3xl text-2xl font-bold shadow-xl">
       Play again ❤️
     </button>
   </div>
@@ -66,35 +65,68 @@
       "Are you positive? 😭",
       "Pookie please... ❤️",
       "I will be very sad... 🥺",
-      "Last chance!! 😢"
+      "Last chance!! 😢"   // <-- This is the final one
     ];
     const characters = ["🥰", "🥺", "😭", "🥹", "😢"];
 
+    const noBtn = document.getElementById("noBtn");
+    let isRunning = false;
+
+    function getRandomPosition() {
+      const maxX = window.innerWidth - noBtn.offsetWidth - 50;
+      const maxY = window.innerHeight - noBtn.offsetHeight - 100;
+      const randomX = Math.max(50, Math.random() * maxX);
+      const randomY = Math.max(50, Math.random() * maxY);
+      return { x: randomX, y: randomY };
+    }
+
+    function makeButtonRunAway() {
+      if (!isRunning) {
+        isRunning = true;
+        noBtn.classList.add("running");
+      }
+
+      const pos = getRandomPosition();
+      noBtn.style.left = pos.x + "px";
+      noBtn.style.top = pos.y + "px";
+    }
+
     function sayNo() {
       noCount++;
-      const btn = document.getElementById("noBtn");
       const char = document.getElementById("character");
       const status = document.getElementById("status");
 
-      // Change button text
-      btn.textContent = noMessages[noCount % noMessages.length];
-      
-      // Change character to sadder
-      char.textContent = characters[noCount % characters.length];
-      
-      // Small shake animation
-      btn.classList.add("animate-bounce");
-      setTimeout(() => btn.classList.remove("animate-bounce"), 500);
+      // Update button text
+      noBtn.textContent = noMessages[Math.min(noCount - 1, noMessages.length - 1)];
+
+      // Update character
+      char.textContent = characters[Math.min(noCount - 1, characters.length - 1)];
 
       status.textContent = "Come on... you know you want to say yes 💕";
+
+      // === LAST CHANCE BEHAVIOR ===
+      if (noCount >= 5) {   // "Last chance!!"
+        noBtn.textContent = "Last chance!! 😢";
+        noBtn.style.pointerEvents = "none"; // Prevent actual clicks
+        makeButtonRunAway();
+
+        // Keep running away on hover AND click attempts
+        noBtn.addEventListener("mouseenter", makeButtonRunAway);
+        noBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+          makeButtonRunAway();
+        });
+      } else {
+        // Normal bounce for early clicks
+        noBtn.classList.add("animate-bounce");
+        setTimeout(() => noBtn.classList.remove("animate-bounce"), 600);
+      }
     }
 
     function sayYes() {
       document.getElementById("main").classList.add("hidden");
-      const success = document.getElementById("success");
-      success.classList.remove("hidden");
+      document.getElementById("success").classList.remove("hidden");
       
-      // Confetti
       const canvas = document.getElementById("confetti");
       canvas.classList.remove("hidden");
       launchConfetti(canvas);
@@ -117,10 +149,7 @@
           this.color = colors[Math.floor(Math.random() * colors.length)];
           this.angle = Math.random() * 360;
         }
-        update() {
-          this.y += this.speed;
-          this.angle += 5;
-        }
+        update() { this.y += this.speed; this.angle += 5; }
         draw() {
           ctx.save();
           ctx.translate(this.x, this.y);
@@ -149,7 +178,7 @@
       location.reload();
     }
 
-    // Make canvas full screen
+    // Resize handler
     window.addEventListener("resize", () => {
       const canvas = document.getElementById("confetti");
       if (canvas) {
