@@ -55,7 +55,6 @@
       Click the big heart ❤️
     </div>
 
-    <!-- Next Button -->
     <button onclick="getNewReason()" 
             class="mt-8 px-10 py-4 bg-pink-600 hover:bg-pink-700 text-white text-xl font-medium rounded-full shadow-lg transition-all active:scale-95">
       Next Reason 💕
@@ -240,19 +239,18 @@
       const randomIndex = Math.floor(Math.random() * reasons.length);
       const reason = reasons[randomIndex];
 
-      // Show reason
       document.getElementById('reasonBox').innerHTML = `
         <span class="block text-5xl mb-6">❤️</span>
         ${reason}
       `;
 
-      // Floating hearts animation
-      for (let i = 0; i < 15; i++) {
-        setTimeout(createFloatingHeart, i * 60);
+      // Floating hearts
+      for (let i = 0; i < 18; i++) {
+        setTimeout(createFloatingHeart, i * 50);
       }
     }
 
-    // Load first reason automatically
+    // Load first reason
     window.onload = getNewReason;
   </script>
 </body>
