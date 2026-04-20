@@ -21,34 +21,30 @@
   </style>
 </head>
 <body class="min-h-screen flex items-center justify-center text-white font-sans">
-  <div id="main" class="text-center max-w-[95%] md:max-w-4xl mx-auto p-6 md:p-12 lg:p-16">
+  <div id="main" class="text-center w-full max-w-[98%] mx-auto px-6 md:px-12 lg:px-20 py-8">
   
-    <!-- Final optimized header - no wrapping on laptop -->
-    <h1 class="text-3xl sm:text-4xl md:text-[2.6rem] lg:text-5xl font-bold mb-20 leading-[1.5] text-center px-6">
+    <!-- Header - Full width + clean lines -->
+    <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-20 leading-[1.5] text-center">
       I still choose you every single day.<br>
       Do you choose me too?<br>
-      Can I keep you as my wife<br>
-      for one more lifetime? ❤️
+      Can I keep you as my wife<br>for another lifetime? ❤️
     </h1>
-
-    <div id="character" class="text-[160px] md:text-[180px] mb-10 transition-all">🥰</div>
-
-    <div class="flex justify-center gap-6 relative  flex-wrap">
-      <!-- Yes Button -->
+  
+    <div id="character" class="text-[170px] md:text-[220px] mb-12 transition-all">🥰</div>
+  
+    <div class="flex justify-center gap-8 relative flex-wrap">
       <button onclick="sayYes()" 
-              class="bg-green-500 hover:bg-green-600 px-12 py-6 rounded-3xl text-4xl font-bold shadow-xl transition transform hover:scale-110">
+              class="bg-green-500 hover:bg-green-600 px-14 py-7 rounded-3xl text-4xl font-bold shadow-xl transition transform hover:scale-110">
         YES 💖
       </button>
-
-      <!-- No Button -->
+  
       <button onclick="sayNo()" id="noBtn"
-              class="bg-red-500 hover:bg-red-600 px-10 py-6 rounded-3xl text-3xl font-bold shadow-xl">
+              class="bg-red-500 hover:bg-red-600 px-12 py-7 rounded-3xl text-3xl font-bold shadow-xl">
         No
       </button>
     </div>
-
-    
-    <p id="status" class="mt-10 text-xl font-medium text-pink-100 min-h-[3rem]"></p>
+  
+    <p id="status" class="mt-12 text-xl font-medium text-pink-100 min-h-[3rem]"></p>
   </div>
 
   <!-- Success Screen -->
