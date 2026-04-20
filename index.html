@@ -11,11 +11,12 @@
       overflow: hidden;
     }
     #noBtn {
-      transition: all 0.15s ease-out;
+      transition: all 0.08s ease-out;   /* Faster movement */
     }
     #noBtn.running {
       position: fixed !important;
       z-index: 50;
+      box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
     }
   </style>
 </head>
@@ -61,31 +62,33 @@
     let isRunning = false;
 
     const noMessages = [
-      "No",
-      "Are you positive? 😭",
-      "Pookie please... ❤️",
+      "No", 
+      "Are you positive? 😭", 
+      "Pookie please... ❤️", 
       "I will be very sad... 🥺",
       "Really? Not even a little? 🥹",
-      "Think of the hamsters! 🐹💔",
+      "Even the WiFi is sad now... 📶💔", 
       "My heart is breaking... 😢",
       "You're killing me here... 🥀",
       "Last chance!! 😭"
     ];
 
-    const characters = [
-      "🥰", "🥺", "😭", "🥹", 
-      "😢", "🐹", "💔", "🥀", "😭"
-    ];
+    const characters = ["🥰", "🥺", "😭", "🥹", "😢", "🐹", "💔", "🥀", "😭"];
 
     const noBtn = document.getElementById("noBtn");
 
     function getRandomPosition() {
-      const padding = 80;
-      const maxX = window.innerWidth - noBtn.offsetWidth - padding;
-      const maxY = window.innerHeight - noBtn.offsetHeight - padding;
-      const x = Math.max(padding, Math.random() * maxX);
-      const y = Math.max(padding, Math.random() * maxY);
-      return { x, y };
+      const padding = 100;
+      const btnWidth = noBtn.offsetWidth || 120;
+      const btnHeight = noBtn.offsetHeight || 60;
+      
+      const maxX = window.innerWidth - btnWidth - padding;
+      const maxY = window.innerHeight - btnHeight - padding;
+      
+      const x = padding + Math.random() * maxX;
+      const y = padding + Math.random() * maxY;
+      
+      return { x: Math.max(padding, x), y: Math.max(padding, y) };
     }
 
     function moveButtonRandomly() {
@@ -99,12 +102,15 @@
       isRunning = true;
 
       noBtn.classList.add("running");
-      noBtn.style.pointerEvents = "none";
       noBtn.textContent = "Last chance!! 😭";
 
+      // Move on hover
       noBtn.addEventListener("mouseenter", moveButtonRandomly);
+      
+      // Move on click attempt (and prevent any "No" action)
       noBtn.addEventListener("click", (e) => {
         e.preventDefault();
+        e.stopImmediatePropagation();
         moveButtonRandomly();
       });
     }
@@ -119,18 +125,16 @@
       noBtn.textContent = noMessages[index];
       char.textContent = characters[index];
       
-      status.textContent = noCount > 6 
-        ? "This is getting serious... please say yes 💕" 
-        : "Come on... you know you want to say yes 💕";
+      status.textContent = "Come on... you know you want to say yes 💕";
 
       if (noCount < 9) {
-        // Normal funny stages
+        // Normal stages
         noBtn.classList.add("animate-bounce");
-        setTimeout(() => noBtn.classList.remove("animate-bounce"), 600);
+        setTimeout(() => noBtn.classList.remove("animate-bounce"), 500);
       } else {
-        // 9th click → running mode
+        // LAST CHANCE - Running mode
         activateRunningMode();
-        moveButtonRandomly();
+        moveButtonRandomly();           // First immediate jump
       }
     }
 
@@ -191,6 +195,7 @@
       location.reload();
     }
 
+    // Resize support
     window.addEventListener("resize", () => {
       if (isRunning) moveButtonRandomly();
     });
